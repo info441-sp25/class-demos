@@ -1,6 +1,6 @@
-async function pluralizeWord(){
-    let inputWord = document.getElementById("wordInput").value
-    let response = await fetch("api/pluralize?word=" + inputWord)
+async function auditUrl(){
+    let inputUrl = document.getElementById("urlInput").value
+    let response = await fetch("api/auditurl?url=" + inputUrl)
     let resultText = await response.text()
 
     document.getElementById("results").innerHTML = resultText;
