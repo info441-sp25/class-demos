@@ -1,5 +1,6 @@
+import fetch from 'node-fetch'
+import parser from 'node-html-parser'
 import { promises as fs } from 'fs'
-import pluralize from 'pluralize'
 import express from 'express'
 const app = express()
 
@@ -32,11 +33,28 @@ app.get("/favicon.ico", async (req, res) => {
 })
 
 
-app.get("/api/pluralize", (req, res) => {
-    const inputWord = req.query.word
-    const pluralWord = pluralize(inputWord)
+app.get("/api/auditurl", async (req, res) => {
+    const inputUrl = req.query.url
+    const response = await fetch(inputUrl)
+    const pageText = await response.text()
+
+    const htmlPage = parser.parse(pageText)
+    const imgTags = htmlPage.querySelectorAll("img")
+
+    let htmlReturn = ""
+
+    for(let i = 0; i < imgTags.length; i++){
+        const imgTag = imgTags[i]
+
+        htmlReturn += "<h3>Image " + i + " info:</h3>"
+        htmlReturn += "alt text: " + imgTag.attributes.alt + "<br>"
+        htmlReturn += "img src: " + imgTag.attributes.src + "<br>"
+        htmlReturn += "<img src='" + inputUrl + imgTag.attributes.src +  "' />"
+    }
+
+    
     res.type("txt")
-    res.send(pluralWord)
+    res.send(htmlReturn)
 })
 
 app.listen(3000, () => {
