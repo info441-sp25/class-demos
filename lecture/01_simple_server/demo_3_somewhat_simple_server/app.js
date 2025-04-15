@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 
 app.get("/", (req, res) => {
+    console.log("got a request for /")
     res.type('html')
     res.send(`
         <html>
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/style.css", (req, res) => {
+    console.log("got a request for style.css")
     res.type("css")
     res.send(`
         h1{color:red}
