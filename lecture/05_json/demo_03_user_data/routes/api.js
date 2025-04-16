@@ -2,20 +2,10 @@ import {promises as fs} from 'fs'
 import express from 'express'
 const router = express.Router();
 
-router.get('/getPterosaurs', async (req, res) => {
-    const data = await fs.readFile("data/pterosaur.json")
-    const pterosaurInfo = JSON.parse(data)
-
-    let filteredPterosaurInfo = 
-        pterosaurInfo.filter(item => {
-            if(item.img != ""){
-                return true // keep
-            } else{
-                return false // remove
-            }
-        })
-
-    res.json(filteredPterosaurInfo)
+router.get('/getUsers', async (req, res) => {
+    const data = await fs.readFile("data/userData.json")
+    res.type("json")
+    res.send(data)
 })
 
 router.post('/users', async (req, res) => {
