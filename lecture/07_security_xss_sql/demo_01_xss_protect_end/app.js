@@ -28,6 +28,27 @@ function vulnerableAddUserInput(){
   `
 }
 
+// use an escapeHTML function to clean the user input first
+function fixWithFunction(){
+  return `
+  <p>
+  <strong>Here is the user input:</strong> ${escapeHTML(userInputWithHTML)}
+  </p>
+  `
+}
+
+function fixWithInnerText(){
+  let htmlString = `
+  <p>
+  <strong>Here is the user input:</strong> <span id='userInput1'></span>
+  </p>
+  `
+
+  const parsedHTML = cheerio.load(htmlString)
+  parsedHTML("#userInput1").text(userInputWithHTML)
+  return parsedHTML.html()
+}
+
 // Below are the sections we'll be working though to learn how to avoid XSS
 app.get('/', (req, res) => {
   res.send(`
@@ -36,6 +57,12 @@ app.get('/', (req, res) => {
 
   <h2> vulnerable user input </h2>
   ${vulnerableAddUserInput()}
+
+  <h2> fix with function </h2>
+  ${fixWithFunction()}
+
+  <h2> fix with innerText </h2>
+  ${fixWithInnerText()}
   
   </body>
   </html>
