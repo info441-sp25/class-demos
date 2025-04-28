@@ -30,6 +30,8 @@ router.get('/', function(req, res, next) {
   let nameSearch = req.query.nameSearch
   nameSearch = nameSearch ? nameSearch : ""
 
+  // TO fix the sql injection vulnerability, do this line instead:
+  //db.all('SELECT *FROM people WHERE first_name = ?', nameSearch,
   db.all(`SELECT * FROM people WHERE first_name = "${nameSearch}"`,
     (err, allRows) => {
       if(err){
