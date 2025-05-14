@@ -73,4 +73,36 @@ async function addPricesToCart(cartInfo, models){
     return combinedCartInfo
 }
 
+async function calculateOrderAmount(req){
+    // get cart info, combine with prices, calculate the total price
+    const cartInfo = JSON.parse(req.session.cartInfo)
+
+    const combinedCartInfo = await addPricesToCart(cartInfo, req.models)
+
+    const totalCost = combinedCartInfo
+        .map(item => item.price * item.itemCount) // get cost for each item type
+        .reduce((prev, curr) => prev + curr)
+
+    return totalCost
+}
+
+
+router.post('/create-payment-intent', async (req, res) => {
+    //look up the order amount
+    let orderAmount = await calculateOrderAmount(req)
+
+    // create a PaymentIntent object with the order amount
+    const paymentIntent = await req.stripe.paymentIntents.create({
+        amount: orderAmount * 100,
+        currency: "usd", // note: 'usd' is actually US cents for some reason (US dollars * 100)
+        automatic_payment_methods: {
+            enabled: true
+        }
+    })
+
+    res.send({
+        clientSecret: paymentIntent.client_secret
+    })
+})
+
 export default router;
