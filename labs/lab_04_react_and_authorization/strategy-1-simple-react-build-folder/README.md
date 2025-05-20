@@ -1,4 +1,4 @@
-# Instructions for lab 9 Strategy 1 setup:
+# Instructions for lab 9 : React + Express Deployment
 
 **NOTE: If you are unsure JUST COPY THE FILES IN THIS DEMO!!!** This includes big folders like `bin` and `node_modules`
 
@@ -18,14 +18,36 @@ still have all the folder and files other than `public`.
 
 ### Instructions:
 
-1. create backend and frontend folder for better organization
-2. navigate to backend folder and do the normal server-side, express set up (import the express starter code, or npm init, npm install express, etc.)
-3. navigate to the frontend folder and paste react/frontend code into it
-4. `npm run build` to build the frontend/react code (write all your frontend changes here)
-5. copy over all the react frontend `/build` folder/code (static code, not responsive ones) into the server side public folder
-6. write the server side code like we did in class, but using the react front end code now
-7. Repeat steps everytime you want to change front-end code
+1. **Create Folder Structure**
+
+   - Create `frontend/` for React, and `backend/` for Express.
+
+2. **Set Up Backend (Express)**
+
+   - In `backend/`, either:
+     - Copy the Express starter code from the class repo, or
+     - Run `npm init`, then `npm install express`
+   - Make sure to keep the `bin/` folder and `"type": "module"` in your `package.json`.
+
+3. **Set Up Frontend (React)**
+
+   - In `frontend/`, paste your React code.
+   - Make any frontend changes here (do **not** edit directly in `public`).
+   - Run `npm run build` to generate production-ready files in the `build/` folder.
+
+4. **Copy Build to Backend**
+
+   - Copy the contents of `frontend/build/` into `backend/public/`.
+
+5. **Write Server Code**
+
+   - In the `backend/`, write your Express routes and logic as usual.
+   - The Express app will serve your React build via the `public` folder.
+
+6. **Repeat as Needed**
+   - Every time you make a change to the React frontend:
+     1. Run `npm run build` in `frontend/`
+     2. Copy the updated `build/` into `backend/public/`
 
 Version 1 of this demo is written by: Anthony Wen
-
-Orginal Repo: https://github.com/info441-winter2025/class-demos/tree/main/lab/lab_09_react_and_authorization
+Cleanup by david pham
