@@ -8,7 +8,7 @@ This setup uses React for the frontend and Express for the backend. The React fr
 - React handles state with `useState`, `useEffect`, etc.
 - Handler functions (like `handleSignIn`, `handleSignOut`) in React connect to Express routes. Use consistent naming conventions with a `handle` prefix.
 
-**Note:** DO NOT DELETE THE `bin` folder that the express starter had and also the `"type":"module"` in package.json.
+> **Note:** DO NOT DELETE THE `bin` folder that the express starter had and also the `"type":"module"` in package.json.
 
 ### Instructions:
 
