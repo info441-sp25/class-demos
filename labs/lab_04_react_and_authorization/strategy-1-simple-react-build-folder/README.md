@@ -1,20 +1,14 @@
 # Instructions for lab 9 : React + Express Deployment
 
-**NOTE: If you are unsure JUST COPY THE FILES IN THIS DEMO!!!** This includes big folders like `bin` and `node_modules`
+> **Note:** If you're unsure about anything, **just copy all files from the demo repo**, including large folders like `bin` and `node_modules`.
 
-Essentially this strategy is just copying the front-end react code to the backend serverside code every single time you change something in the front end react. In other words, this is everything you would write in the `public` folder of websharer. e.g. when a handler, endpoint, or some utils function gets changed or added in terms of front end.
+This setup uses React for the frontend and Express for the backend. The React frontend is built and manually copied into the Express server’s `public` folder after every update.
 
-### Frontend (react):
+- The React app replaces the static files that used to live in the `public` folder (like `identity.js`, `userInfo.js`, `utils.js`).
+- React handles state with `useState`, `useEffect`, etc.
+- Handler functions (like `handleSignIn`, `handleSignOut`) in React connect to Express routes. Use consistent naming conventions with a `handle` prefix.
 
-handles all the state changes using `useState` and `useEffect` to replace everything that websharer's public folder handled previously. (this demo's react components replace specifically `indentity.js`, `userInfo.js`, `utils.js` in the public folder)
-
-**NOTE:** the handleEvents function are usually the ones that would link to the routes you wrote in express. I suggest keeping those naming conventions consistent, like having all those handler function start with the word `handle`, like `handleEventName`. In this demo, they linked to the `signin` and `signout` or the `users` routes that were in `app.js`
-
-### Backend (express):
-
-still have all the folder and files other than `public`.
-
-**NOTE:** DO NOT DELETE THE `bin` folder that the express starter had and also the `"type":"module"` in package.json.
+**Note:** DO NOT DELETE THE `bin` folder that the express starter had and also the `"type":"module"` in package.json.
 
 ### Instructions:
 
@@ -50,4 +44,5 @@ still have all the folder and files other than `public`.
      2. Copy the updated `build/` into `backend/public/`
 
 Version 1 of this demo is written by: Anthony Wen
-Cleanup by david pham
+
+Instructions redone by David Pham
