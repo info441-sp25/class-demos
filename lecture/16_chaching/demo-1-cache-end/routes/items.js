@@ -1,8 +1,37 @@
+import cache from 'memory-cache'
 import express from 'express';
 var router = express.Router();
 
+// artificially slow down getting the items from the database
+// to pretend that this is a really slow, difficult query, so
+// we can see the benefits of caching
+async function getItemsSlow(req){
+    // get all items from the database
+    const allItems = await req.models.Item.find()
+
+    // pause for 5 seconds to pretend this was a difficult query
+    const sleepSeconds = 5
+    await new Promise(r => setTimeout(r, sleepSeconds * 1000))
+
+    return allItems
+}
+
+
 router.get("/", async (req, res) => {
-    let allItems = await req.models.Item.find()
+    console.log("got a GET request for all items, first check the cache")
+
+    let allItems = cache.get('allItems')
+    if(allItems){
+        console.log("cache hit: found items in my cache")
+    } else { // otherwise, look up info from database and save it
+        console.log("cache miss, doing the slow db lookup")
+        allItems = await getItemsSlow(req)
+        console.log("loaded items from db, saving to cache")
+        cache.put('allItems', allItems, 30*1000)
+    }
+
+    // set caching rule for browser
+    // res.setHeader('Cache-Control', 'public, max-age=30')
     res.json(allItems)
 })
 
